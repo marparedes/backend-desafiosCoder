@@ -28,14 +28,22 @@ const operacion = async (num1, num2, operation) => {
         case 'resta':
             result = await Promise.resolve().then(() => __importStar(require(op))).then(module => module.Resta);
             break;
+        case 'multiplicacion':
+            result = await Promise.resolve().then(() => __importStar(require(op))).then(module => module.Multiplicacion);
+            break;
+        case 'division':
+            result = await Promise.resolve().then(() => __importStar(require(op))).then(module => module.Division);
+            break;
         default:
-            return console.log('Ingrese otro tipo de operación');
+            return console.log(`No existe la operación ${operation} en esta app`);
     }
     return new result(num1, num2).resultado();
 };
 const operaciones = async (num1, num2, op) => {
     const result = await operacion(num1, num2, op);
-    console.log(result);
+    if (result) {
+        console.log(result);
+    }
 };
 // prueba
 operaciones(5, 3, 'suma');

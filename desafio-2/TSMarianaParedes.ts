@@ -9,15 +9,23 @@ const operacion = async (num1: number, num2: number, operation: string): Promise
         case 'resta':
             result = await import(op).then(module => module.Resta);
             break
+        case 'multiplicacion':
+            result = await import(op).then(module => module.Multiplicacion);
+            break
+        case 'division':
+            result = await import(op).then(module => module.Division);
+            break
         default :
-            return console.log('Ingrese otro tipo de operación')
+            return console.log(`No existe la operación ${operation} en esta app`);
     }
     return new result(num1, num2).resultado()
 }
 
 const operaciones = async (num1: number, num2: number, op: string) => {
     const result = await operacion(num1, num2, op);
-    console.log(result)
+    if(result) {
+        console.log(result)
+    }
 }
 
 // prueba
