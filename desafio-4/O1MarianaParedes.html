@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/rxjs@6.6.3/bundles/rxjs.umd.min.js"></script>
+    <title>Consigna 1</title>
+</head>
+<body>
+
+    <input id="text" type="text">
+    <span id="mirrored"></span>
+
+    <script>
+
+        const { fromEvent } = rxjs;
+        const input = document.getElementById('text');
+        const mirroredInput = document.getElementById('mirrored');
+
+        const observable = fromEvent(input, 'keydown')
+
+        let mirror = '';
+
+        const subscription = observable.subscribe( event => {
+            
+            if(event.keyCode >= 39 && event.keyCode < 91 || event.keyCode === 32) {
+                mirror += event.key;
+                mirrored.textContent = mirror.split("").reverse().join("");
+            }
+
+            if(mirror === 'error') {
+                subscription.error('Se ingresó la palabara "Error"')
+            }
+
+            if(mirror === 'complete') {
+                subscription.complete()
+            }
+
+            setTimeout(() => {
+                subscription.unsubscribe();
+                reset();
+            }, 30000);
+        }, error => {
+                console.log(error);
+                reset();
+            },
+            () => {
+                console.log('Se ingresó la palabra "Complete"')
+                reset();
+            }
+        )
+
+        const reset = () => {
+            input.value = '';
+            input.disabled = true;
+            mirror = '';
+            mirroredInput.textContent = ''
+        }
+
+    </script>
+    
+</body>
+</html>
