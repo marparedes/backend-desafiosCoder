@@ -1,0 +1,28 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Document
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous')
+.container.mb-4
+  .row
+    .col-12
+      h2 Vista de productos
+      if listExist
+        .table-responsive
+            table.table.table-striped
+                thead
+                    tr
+                    th(scope='col') Nombre
+                    th.text-left(scope='col') Precio
+                    th.text-left(scope='col') Foto
+                tbody
+                    each prod in products
+                        tr
+                        td= prod.title 
+                        td.text-left=prod.price
+                        td.text-left
+                            img(src=prod.thumbnail alt='img')
+      else 
+        .alert.alert-warning.text-center(role='alert')
+            | No se encontraron productos
